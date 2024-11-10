@@ -1,101 +1,65 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <>
+      <Head>
+        <title>Social-Network: Connect and Share Moments</title>
+        <meta
+          name="description"
+          content="Rejoignez Social-Network pour vous connecter, partager et explorer des moments avec une communauté vibrante. Découvrez de nouvelles amitiés et exprimez-vous librement !"
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
+        <meta
+          property="og:title"
+          content="Social-Network: Connect and Share Moments"
+        />
+        <meta
+          property="og:description"
+          content="Rejoignez Social-Network et connectez-vous avec le monde. Partagez, explorez et exprimez-vous dans une communauté active !"
+        />
+        <meta property="og:image" content="/landing-page-illustration.svg" />
+        <meta property="og:url" content="https://votre-site.com" />
+      </Head>
+      <div className=" px-8 sm:px-2 flex max-w-screen-lg flex-col mx-auto items-center pt-16 gap-4 bg-white h-max">
+        <h1 className=" text-4xl text-center font-bold">
+          Connect and Share Moments with the World
+        </h1>
+        <h2 className="text-2xl text-center">Welcome to Social-Network</h2>
+        <p className=" text-center">
+          Join A vibrant community where you can connect, share, and experience
+          life together. <br />
+          Create moments, explore new friendships, and express yourself with
+          ease.
+        </p>
+        <Link href={"/authentification"}>
+          <Button className=" bg-teal-700 text-white">Join Now</Button>
+        </Link>
+        <Image
+          width={500}
+          height={500}
+          src={"/landing-page-illustration.svg"}
+          alt={
+            "an illustration of subjects you can speak about on this social network"
+          }
+        />
+        <ul>
+          <li>
+            <strong>Discover Interests:</strong> Find communities and people who
+            share your passions.
           </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <li>
+            <strong>Express Freely:</strong> Post, comment, and react to what
+            matters to you.
+          </li>
+          <li>
+            <strong>Stay Connected:</strong> Real-time updates keep you in the
+            loop with friends and trending topics.
+          </li>
+        </ul>
+      </div>
+    </>
   );
 }
