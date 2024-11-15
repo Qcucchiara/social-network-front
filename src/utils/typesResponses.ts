@@ -3,7 +3,9 @@ interface BaseComment {
   author_id: string;
   status: string;
   likeCount: number;
+  user_has_liked: string[];
   dislikeCount: number;
+  user_has_disliked: string[];
   content: string;
   createdAt: string;
   updatedAt: string;

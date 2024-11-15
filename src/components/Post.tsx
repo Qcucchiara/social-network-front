@@ -12,7 +12,12 @@ import { CommentButton } from "./TODO/Base/CommentButton";
 import { Bookmark } from "lucide-react";
 import { PostType } from "@/utils/typesResponses";
 
-export const Post = ({ data }: { data: PostType }) => {
+type PostComponentType = {
+  data: PostType;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
+  NewComment?: () => React.JSX.Element;
+};
+export const Post = ({ data, setRefresh, NewComment }: PostComponentType) => {
   return (
     <Card>
       <CardHeader>
@@ -23,18 +28,26 @@ export const Post = ({ data }: { data: PostType }) => {
         <p>{data.content}</p>
       </CardContent>
       <CardFooter className=" justify-between">
-        <LikeButtons likes={data.likeCount} dislikes={data.dislikeCount} />
-        <CommentButton comments={8} />
+        <LikeButtons
+          setRefresh={setRefresh}
+          publicationId={data._id}
+          likeList={data.user_has_liked}
+          dislikeList={data.user_has_disliked}
+          likes={data.likeCount}
+          dislikes={data.dislikeCount}
+        />
+        <CommentButton comments={0} />
         {data.isBookmarked ? (
           <span>
             <Bookmark />
           </span>
         ) : (
-          <span className=" text-teal-700">
+          <span className="text-teal-700">
             <Bookmark fill="#0f766e" />
           </span>
         )}
       </CardFooter>
+      {NewComment && <NewComment />}
     </Card>
   );
 };

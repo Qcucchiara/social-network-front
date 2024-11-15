@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { loginSchema } from "@/validator/login.validator";
 import { z } from "zod";
 import { handleAuth } from "@/services/social-network/social-network.auth";
-import toast from "react-hot-toast";
 import { saveToLocalStorage } from "@/utils/localstorage";
 
 const Login = () => {
@@ -33,6 +32,8 @@ const Login = () => {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     handleAuth.login(values).then((res) => {
       saveToLocalStorage("token", res.data.token);
+      saveToLocalStorage("user_id", res.data.user.id);
+      saveToLocalStorage("username", res.data.user.username);
       console.log(res);
     });
     console.log(values);

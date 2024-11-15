@@ -11,7 +11,7 @@ const backend = axios.create({
     "content-type": "application/json;charset=utf-8",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "*",
-    Authorization: `Bearer ${typeof window !== "undefined" && window.localStorage.getItem("token")}`,
+    Authorization: `Bearer ${typeof window !== "undefined" && window.localStorage.getItem("token")?.replaceAll('"', "")}`,
   },
 });
 

@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import NewComment from "./TODO/NewComment";
 
 type ListPostType = {
   skip: number;
@@ -28,6 +29,7 @@ type ListPostType = {
 
 export const ListPosts = ({ skip, take, sort, filter }: ListPostType) => {
   const [listPosts, setListPosts] = useState<PostType[]>([]);
+  const [refresh, setRefresh] = useState(false);
 
   const getPosts = async () => {
     const axiosResponse: AxiosResponse = await handlePublication.findPosts(
@@ -36,18 +38,26 @@ export const ListPosts = ({ skip, take, sort, filter }: ListPostType) => {
       sort,
       filter,
     );
+    console.log(axiosResponse.data);
     setListPosts(axiosResponse.data);
   };
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [refresh]);
 
   return (
     <div className=" flex flex-col gap-4 h-full">
       {listPosts ? (
         listPosts.map((post: PostType, index: number) => {
-          return <Post key={post._id} data={post} />;
+          return (
+            <Post
+              NewComment={NewComment}
+              setRefresh={setRefresh}
+              key={post._id}
+              data={post}
+            />
+          );
         })
       ) : (
         <div className="flex justify-center items-center h-full">
