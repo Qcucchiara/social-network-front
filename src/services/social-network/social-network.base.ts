@@ -1,7 +1,9 @@
-"use client"
+"use client";
+import { getFromLocalStorage } from "@/utils/localstorage";
 import axios from "axios";
+console.log(getFromLocalStorage("token"));
 
- const backend = axios.create({
+const backend = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BACKEND_URL,
   // baseURL: "http://localhost:8443/api",
 
@@ -13,5 +15,4 @@ import axios from "axios";
   },
 });
 
-
-export default backend
+export default backend;

@@ -17,42 +17,46 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "@/validator/login.validator";
 import { z } from "zod";
-
-async function test() {
-  // return backend.get('/test')
-
-  const response = await fetch(`http://localhost:4004/api/test`);
-  const res = await response.json();
-  console.log(res);
-}
+import { handleAuth } from "@/services/social-network/social-network.auth";
+import toast from "react-hot-toast";
+import { saveToLocalStorage } from "@/utils/localstorage";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      identifier: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    handleAuth.login(values).then((res) => {
+      saveToLocalStorage("token", res.data.token);
+      console.log(res);
+    });
     console.log(values);
-    test()
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 ">
         <FormField
           control={form.control}
-          name="username"
+          name="identifier"
           render={({ field }) => (
             <FormItem>
               <FormLabel>username</FormLabel>
               <FormControl>
-                <Input placeholder="email or username" {...field} />
+                <Input
+                  placeholder="email or username"
+                  autoComplete="email"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>email or username</FormDescription>
-              <FormMessage />
+              <div className=" flex justify-between">
+                <FormDescription>email or username</FormDescription>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />
@@ -61,12 +65,19 @@ const Login = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>username</FormLabel>
+              <FormLabel>password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="your password" {...field} />
+                <Input
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="your password"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>email or username</FormDescription>
-              <FormMessage />
+              <div className=" flex justify-between">
+                <FormDescription>password</FormDescription>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />

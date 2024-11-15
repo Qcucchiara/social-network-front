@@ -16,4 +16,5 @@ export interface CommentType extends BaseComment {
 export interface PostType extends BaseComment {
   post_title: string;
   post_list_tags: string[];
+  isBookmarked: boolean;
 }

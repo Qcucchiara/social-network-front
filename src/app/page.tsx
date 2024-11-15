@@ -27,7 +27,7 @@ export default function Home() {
         <h1 className=" text-4xl text-center font-bold">
           Connect and Share Moments with the World
         </h1>
-        <h2 className="text-2xl text-center">Welcome to Social-Network</h2>
+        <h2 className="text-2xl text-center">Welcome to Nexus</h2>
         <p className=" text-center">
           Join A vibrant community where you can connect, share, and experience
           life together. <br />

@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import handleStatusToaster from "@/utils/handleStatusToaster";
+// import handleStatusToaster from "@/utils/handleStatusToaster";
 import backend from "./social-network.base";
 
-export async function test() {
-  // return backend.get('/test')
-
-  const response = await fetch(`http://localhost:4004/api/test`);
-  const res = await response.json();
-  console.log(res);
-}
+export type GetPostQuery = {
+  authorIds?: string[];
+  tags?: string[];
+};
 
 export const handlePublication = {
   createPost: async (data: unknown) => {
@@ -24,35 +22,40 @@ export const handlePublication = {
 
     return response;
   },
-  findMostPopularPosts: async (skip: number, take: number) => {
-    const response = backend.get(`publication/post/top/${skip}/${take}`);
-    // handleStatusToaster(response, "topPosts");
-
-    return response;
-  },
-  findLastPostsFromUser: async (userId: string, skip: number, take: number) => {
-    const response = backend.get(`publication/post/last/${userId}/${skip}/${take}`);
-    handleStatusToaster(response, "lastPostsFromUser");
-
-    return response;
-  },
-  findTopCommentsFromPost: async (
-    postId: string,
+  /**
+   *
+   * @param skip
+   * @param take
+   * @param sort
+   * @param data
+   * @returns response
+   */
+  findPosts: async (
     skip: number,
     take: number,
+    sort: string,
+    data?: GetPostQuery,
   ) => {
-    const response = backend.get(`publication/comment/top/${postId}/${skip}/${take}`);
-    handleStatusToaster(response, "topComments");
+    const response = backend.post(
+      `publication/post/${skip}/${take}/${sort}`,
+      data,
+    );
+    handleStatusToaster(response, "getPosts");
 
     return response;
   },
-  findLastCommentsFromPost: async (
-    postId: string,
-    skip: number,
-    take: number,
-  ) => {
-    const response = backend.get(`publication/comment/last/${postId}/${skip}/${take}`);
-    handleStatusToaster(response, "lastComments");
+  /**
+   *
+   * @param postId
+   * @param skip
+   * @param take
+   * @returns response
+   */
+  findComments: async (postId: string, skip: number, take: number) => {
+    const response = backend.get(
+      `publication/comment/top/${postId}/${skip}/${take}`,
+    );
+    handleStatusToaster(response, "getComments");
 
     return response;
   },

@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 
 /**
@@ -19,14 +19,10 @@ export default async function handleStatusToaster(
     {
       loading: loadMsg ? loadMsg : "Chargement",
       success: (res) => {
-        if (res.data.success) {
-          return res.data.message;
-        }
+        return res.data.message ? res.data.message : res.statusText;
       },
-      error: (err) => {
-        if (!err.data.success) {
-          return err.data.message;
-        }
+      error: (err: AxiosError<Error>) => {
+        return err.response ? err.response.data.message : err.message;
       },
     },
     { id: id },

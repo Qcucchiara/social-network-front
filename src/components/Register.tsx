@@ -15,24 +15,27 @@ import { Input } from "./ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { loginSchema } from "@/validator/login.validator";
 import { z } from "zod";
+import { registerSchema } from "@/validator/register.validator";
+import { handleAuth } from "@/services/social-network/social-network.auth";
 
-const Login = () => {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+const Register = () => {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
       password: "",
+      email: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  function onSubmit(values: z.infer<typeof registerSchema>) {
+    handleAuth.register(values).then((res) => console.log(res));
     console.log(values);
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
           name="username"
@@ -40,10 +43,12 @@ const Login = () => {
             <FormItem>
               <FormLabel>username</FormLabel>
               <FormControl>
-                <Input placeholder="email or username" {...field} />
+                <Input placeholder="username" {...field} />
               </FormControl>
-              <FormDescription>email or username</FormDescription>
-              <FormMessage />
+              <div className=" flex justify-between">
+                <FormDescription>username</FormDescription>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />
@@ -52,12 +57,30 @@ const Login = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>username</FormLabel>
+              <FormLabel>password</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="your password" {...field} />
               </FormControl>
-              <FormDescription>email or username</FormDescription>
-              <FormMessage />
+              <div className=" flex justify-between">
+                <FormDescription>password</FormDescription>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>email</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="your email" {...field} />
+              </FormControl>
+              <div className=" flex justify-between">
+                <FormDescription>email</FormDescription>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />
@@ -67,4 +90,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

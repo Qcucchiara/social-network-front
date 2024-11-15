@@ -10,40 +10,23 @@ import {
 import { LikeButtons } from "./TODO/Base/LikeButtons";
 import { CommentButton } from "./TODO/Base/CommentButton";
 import { Bookmark } from "lucide-react";
+import { PostType } from "@/utils/typesResponses";
 
-type PostType = {
-  author: {
-    authorId: string;
-  };
-  title: string;
-  content: string;
-  likes: number;
-  dislikes: number;
-  isBookmarked: boolean;
-};
-
-export const Post = ({
-  author,
-  title,
-  content,
-  likes,
-  dislikes,
-  isBookmarked,
-}: PostType) => {
+export const Post = ({ data }: { data: PostType }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
         <CardDescription>Card Description</CardDescription>
+        <CardTitle>{data.post_title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>{content}</p>
+        <p>{data.content}</p>
       </CardContent>
       <CardFooter className=" justify-between">
-        <LikeButtons likes={likes} dislikes={dislikes} />
+        <LikeButtons likes={data.likeCount} dislikes={data.dislikeCount} />
         <CommentButton comments={8} />
-        {isBookmarked ? (
-          <span className=" text-teal-700">
+        {data.isBookmarked ? (
+          <span>
             <Bookmark />
           </span>
         ) : (

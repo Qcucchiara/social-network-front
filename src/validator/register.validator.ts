@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-export const loginSchema = z.object({
+export const registerSchema = z.object({
   username: z
     .string({ required_error: "Username or email is required" })
     .min(2, "Username must contain at least 3 characters")
@@ -18,4 +18,9 @@ export const loginSchema = z.object({
       /[^a-zA-Z0-9]/,
       "Password must contain at least one special character.",
     ),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Invalid email")
+    .min(5, "Email must contain at least 5 characters")
+    .max(50, "Email can not contain more than 50 characters"),
 });

@@ -17,17 +17,26 @@ import {
 } from "@/components/ui/pagination";
 
 type ListPostType = {
-  elementQuantity: number;
+  skip: number;
+  take: number;
+  sort: "date" | "popularity";
+  filter?: {
+    authorids?: string[];
+    tags?: string[];
+  };
 };
 
-export const ListPosts = ({ elementQuantity }: ListPostType) => {
+export const ListPosts = ({ skip, take, sort, filter }: ListPostType) => {
   const [listPosts, setListPosts] = useState<PostType[]>([]);
 
   const getPosts = async () => {
-    const axiosResponse: AxiosResponse =
-      await handlePublication.findMostPopularPosts(0, 10);
-    setListPosts(axiosResponse.data.items);
-    console.log(axiosResponse.data);
+    const axiosResponse: AxiosResponse = await handlePublication.findPosts(
+      skip,
+      take,
+      sort,
+      filter,
+    );
+    setListPosts(axiosResponse.data);
   };
 
   useEffect(() => {
@@ -35,25 +44,15 @@ export const ListPosts = ({ elementQuantity }: ListPostType) => {
   }, []);
 
   return (
-    <div className=" flex flex-col gap-4">
+    <div className=" flex flex-col gap-4 h-full">
       {listPosts ? (
         listPosts.map((post: PostType, index: number) => {
-          return (
-            <Post
-              key={index}
-              author={{
-                authorId: "",
-              }}
-              title={post.post_title}
-              content={post.content}
-              likes={post.likeCount}
-              dislikes={post.dislikeCount}
-              isBookmarked={false}
-            />
-          );
+          return <Post key={post._id} data={post} />;
         })
       ) : (
-        <Loader />
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
       )}
       {listPosts && (
         <Pagination>
